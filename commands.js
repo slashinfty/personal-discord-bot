@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder, time } from '@discordjs/builders';
 
 import { reminders, information } from './index.js';
 
@@ -27,7 +27,7 @@ export const commandBuilders = [
             .setRequired(true))
         .addStringOption(option => option
             .setName('date')
-            .setDescription('MM/DD (optional)'))
+            .setDescription('MM/DD/YYYY (optional)'))
         .addStringOption(option => option
             .setName('time')
             .setDescription('HH:MM (24hr time)')
@@ -49,13 +49,44 @@ export const commandBuilders = [
 ];
 
 export const repeatReminder = async (interaction) => {
-
+    const dayArray = interaction.options.getString('days').split(',').map(res => parseInt(res.trim()));
+    const timeArray = interaction.options.getString('time').split(':').map(res => parseInt(res.trim()));
+    reminders.push({
+        message: interaction.options.getString('content'),
+        time: timeArray,
+        repeat: true,
+        days: dayArray
+    });
+    // save file
 }
 
 export const singleReminder = async (interaction) => {
-
+    const timeArray = interaction.options.getString('time').split(':').map(res => parseInt(res.trim()));
+    let date;
+    if (interaction.options.getString('date') === null) {
+        const now = new Date(Date.now());
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), timeArray[0], timeArray[1]);
+        if (today < now) {
+            date = [now.getMonth(), now.getDate() + 1, now.getFullYear()];
+        } else {
+            date = [now.getMonth(), now.getDate(), now.getFullYear()];
+        }
+    } else {
+        date = interaction.options.getString('date').split('/').map(res => parseInt(res.trim()));
+    }
+    reminders.push({
+        message: interaction.options.getString('content'),
+        time: timeArray,
+        repeat: false,
+        date: date
+    });
+    // save file
 }
 
 export const query = async (interaction) => {
 
+}
+
+export const saveInfo = async (interaction) => {
+    
 }
