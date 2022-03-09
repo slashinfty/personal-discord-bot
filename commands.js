@@ -1,4 +1,5 @@
 import { SlashCommandBuilder, time } from '@discordjs/builders';
+import fs from 'fs';
 
 import { reminders, information } from './index.js';
 
@@ -57,7 +58,7 @@ export const repeatReminder = async (interaction) => {
         repeat: true,
         days: dayArray
     });
-    // save file
+    fs.writeFileSync(new URL('./reminders.json', import.meta.url), reminders);
 }
 
 export const singleReminder = async (interaction) => {
@@ -80,7 +81,7 @@ export const singleReminder = async (interaction) => {
         repeat: false,
         date: date
     });
-    // save file
+    fs.writeFileSync(new URL('./reminders.json', import.meta.url), reminders);
 }
 
 export const query = async (interaction) => {
