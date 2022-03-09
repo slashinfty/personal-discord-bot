@@ -42,9 +42,9 @@ export const commandBuilders = [
             .setRequired(true)),
     new SlashCommandBuilder()
         .setName('save-info')
-        .setDescription('Information to save')
+        .setDescription('Add information')
         .addStringOption(option => option
-            .setName('search')
+            .setName('info')
             .setDescription('Information to save')
             .setRequired(true))
 ];
@@ -81,13 +81,25 @@ export const singleReminder = async (interaction) => {
         repeat: false,
         date: date
     });
-    fs.writeFileSync(new URL('./reminders.json', import.meta.url), reminders);
+    fs.writeFileSync(new URL('./reminders.json', import.meta.url), JSON.stringify(reminders));
 }
 
 export const query = async (interaction) => {
-
+    const found = information.filter(info => new RegExp(interaction.options.getString('search'), 'i').test(info));
+    if (found.length === 0) {
+        interaction.reply({
+            content: `No information found for ${interaction.options.getString('search')}`,
+            ephemeral: true
+        });
+    } else {
+        interaction.reply({
+            content: found.join(`\n\n`),
+            ephemeral: true
+        });
+    }
 }
 
 export const saveInfo = async (interaction) => {
-    
+    information.push(interaction.options.getString('info'));
+    fs.writeFileSync(new URL('./information.json', import.meta.url), JSON.stringify(information));
 }

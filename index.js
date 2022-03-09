@@ -18,7 +18,7 @@ export const reminders = JSON.parse(fs.readFileSync(new URL('./reminders.json', 
 export const information = JSON.parse(fs.readFileSync(new URL('./information.json', import.meta.url)));
 
 client.once('ready', async () => {
-
+    console.log(`Online @ ${new Date().toTimeString()} on ${new Date().toDateString()}`);
     setInterval(async () => {
         const now = new Date(Date.now());
         const filteredReminders = reminders.filter(reminder => (reminder.repeat === true && reminder.days.includes(now.getDay())) || (reminder.repeat === false && reminder.date.join('/') === `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`));
@@ -36,7 +36,7 @@ client.once('ready', async () => {
                     await channel.send(reminder.message);
                     const index = reminders.findIndex(r => _.isEqual(r, reminder));
                     reminders.splice(index, 1);
-                    fs.writeFileSync(new URL('./reminders.json', import.meta.url), reminders);
+                    fs.writeFileSync(new URL('./reminders.json', import.meta.url), JSON.stringify(reminders));
                 }
             }
         });
