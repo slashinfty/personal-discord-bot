@@ -58,6 +58,10 @@ export const repeatReminder = async (interaction) => {
         repeat: true,
         days: dayArray
     });
+    interaction.reply({
+        content: `Success!`,
+        ephemeral: true
+    });
     fs.writeFileSync(new URL('./reminders.json', import.meta.url), reminders);
 }
 
@@ -81,6 +85,10 @@ export const singleReminder = async (interaction) => {
         repeat: false,
         date: date
     });
+    interaction.reply({
+        content: `Success!`,
+        ephemeral: true
+    });
     fs.writeFileSync(new URL('./reminders.json', import.meta.url), JSON.stringify(reminders));
 }
 
@@ -101,5 +109,9 @@ export const query = async (interaction) => {
 
 export const saveInfo = async (interaction) => {
     information.push(interaction.options.getString('info'));
+    interaction.reply({
+        content: `Success!`,
+        ephemeral: true
+    });
     fs.writeFileSync(new URL('./information.json', import.meta.url), JSON.stringify(information));
 }
