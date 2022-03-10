@@ -68,9 +68,9 @@ export const singleReminder = async (interaction) => {
         const now = new Date(Date.now());
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), timeArray[0], timeArray[1]);
         if (today < now) {
-            date = [now.getMonth(), now.getDate() + 1, now.getFullYear()];
+            date = [now.getMonth() + 1, now.getDate() + 1, now.getFullYear()];
         } else {
-            date = [now.getMonth(), now.getDate(), now.getFullYear()];
+            date = [now.getMonth() + 1, now.getDate(), now.getFullYear()];
         }
     } else {
         date = interaction.options.getString('date').split('/').map(res => parseInt(res.trim()));
