@@ -27,12 +27,12 @@ export const commandBuilders = [
             .setDescription('Content of the reminder')
             .setRequired(true))
         .addStringOption(option => option
-            .setName('date')
-            .setDescription('MM/DD/YYYY (optional)'))
-        .addStringOption(option => option
             .setName('time')
             .setDescription('HH:MM (24hr time)')
-            .setRequired(true)),
+            .setRequired(true))
+        .addStringOption(option => option
+            .setName('date')
+            .setDescription('MM/DD/YYYY (optional)')),
     new SlashCommandBuilder()
         .setName('query')
         .setDescription('Search for saved information')
