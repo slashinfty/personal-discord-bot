@@ -22,7 +22,8 @@ client.once('ready', async () => {
     setInterval(async () => {
         const now = new Date(Date.now());
         const filteredReminders = reminders.filter(reminder => (reminder.repeat === true && reminder.days.includes(now.getDay())) || (reminder.repeat === false && reminder.date.join('/') === `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`));
-        filteredReminders.forEach(reminder => {
+        for (let i = 0; i < filteredReminders.length; i++) {
+            const reminder = filteredReminders[i];
             if (reminder.repeat === true) {
                 const date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), reminder.time[0], reminder.time[1]);
                 if (date < now && Date.parse(date) + 60000 > now) {
@@ -39,7 +40,7 @@ client.once('ready', async () => {
                     fs.writeFileSync(new URL('./reminders.json', import.meta.url), JSON.stringify(reminders));
                 }
             }
-        });
+        }
     }, 60000);
 });
 
