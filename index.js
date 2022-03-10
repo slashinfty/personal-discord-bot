@@ -1,7 +1,7 @@
 import { Client, Intents } from 'discord.js';
 import _ from 'lodash';
 import fs from 'fs';
-import 'dotenv/config';
+import {} from 'dotenv/config';
 import * as Command from './commands.js';
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
